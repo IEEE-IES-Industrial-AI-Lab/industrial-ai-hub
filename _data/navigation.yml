@@ -1,9 +1,9 @@
 main:
   - title: "Projects"
-    url: /industrial-ai-hub/projects/
+    url: /projects/
   - title: "Datasets"
-    url: /industrial-ai-hub/datasets/
+    url: /datasets/
   - title: "Benchmarks"
-    url: /industrial-ai-hub/benchmarks/
+    url: /benchmarks/
   - title: "GitHub ↗"
     url: "https://github.com/IEEE-IES-Industrial-AI-Lab"
