@@ -100,12 +100,21 @@ $navicon-link-color-hover: rgba(255, 255, 255, 0.8);
 
 // ── Feature rows ─────────────────────────────────────────────────────────────
 .feature__wrapper {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: stretch;
   border-bottom: none;
   margin-bottom: 2em;
 }
 
 .feature__item {
+  display: flex !important;
+  align-self: stretch;
+
   .archive__item {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     border-left: 4px solid #00629B;
     padding: 1.2em 1.4em;
     background: #fff;
@@ -119,6 +128,12 @@ $navicon-link-color-hover: rgba(255, 255, 255, 0.8);
     }
   }
 
+  .archive__item-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
   .archive__item-title {
     font-size: 1.1em;
     font-weight: 700;
@@ -130,6 +145,7 @@ $navicon-link-color-hover: rgba(255, 255, 255, 0.8);
     font-size: 0.88em;
     color: #4a5568;
     line-height: 1.6;
+    flex: 1;
   }
 
   // Alternating accent colors per card
@@ -139,6 +155,22 @@ $navicon-link-color-hover: rgba(255, 255, 255, 0.8);
   &:nth-child(3) .archive__item-title { color: #dc2626; }
   &:nth-child(4) .archive__item { border-left-color: #16a34a; }
   &:nth-child(4) .archive__item-title { color: #16a34a; }
+}
+
+// ── Centered tables and buttons ───────────────────────────────────────────────
+.centered-content {
+  text-align: center;
+
+  table {
+    margin: 0 auto 1.5em;
+    display: inline-table;
+    text-align: left;
+  }
+
+  .btn {
+    display: inline-block;
+    margin-top: 0.5em;
+  }
 }
 
 // ── Intro / stats row ────────────────────────────────────────────────────────

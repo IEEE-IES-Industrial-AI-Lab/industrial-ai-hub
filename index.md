@@ -77,6 +77,8 @@ feature_row2:
 <p class="splash-section-sub">Real industrial datasets used across the four frameworks</p>
 </div>
 
+<div class="centered-content" markdown="1">
+
 | Dataset | Domain | Task | Used In |
 |---------|--------|------|---------|
 | [NASA CMAPSS](https://ti.arc.nasa.gov/c/6/) | Turbofan engine | RUL prediction | Predictive Maintenance |
@@ -92,12 +94,16 @@ feature_row2:
 
 [Full dataset details →](/industrial-ai-hub/datasets/){: .btn .btn--primary}
 
+</div>
+
 ---
 
 <div class="splash-section-wrap">
 <h2 class="splash-section-heading">Key Results</h2>
 <p class="splash-section-sub">Reproducible benchmark results — run any benchmark with a single command</p>
 </div>
+
+<div class="centered-content" markdown="1">
 
 | Framework | Dataset | Model | Metric | Result |
 |-----------|---------|-------|--------|--------|
@@ -109,6 +115,8 @@ feature_row2:
 | Smart Manufacturing | MVTec AD — bottle | ViT-B/16 | AUROC ↑ | **0.982** |
 
 [Full benchmark tables →](/industrial-ai-hub/benchmarks/){: .btn .btn--primary}
+
+</div>
 
 ---
 
