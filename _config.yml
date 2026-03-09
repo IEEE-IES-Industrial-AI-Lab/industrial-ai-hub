@@ -1,0 +1,84 @@
+# Site Settings
+title: "IEEE IES Industrial AI Lab"
+subtitle: "Open-Source Frameworks for Industrial AI"
+description: &description >-
+  Research-grade open-source frameworks for applying AI to industrial systems —
+  predictive maintenance, time-series modeling, power electronics diagnostics,
+  and smart manufacturing.
+url: "https://ieee-ies-industrial-ai-lab.github.io"
+baseurl: "/industrial-ai-hub"
+repository: "IEEE-IES-Industrial-AI-Lab/industrial-ai-hub"
+
+# Theme
+remote_theme: mmistakes/minimal-mistakes@4.24.0
+minimal_mistakes_skin: "default"
+
+# Plugins (subset supported by github-pages)
+plugins:
+  - jekyll-include-cache
+  - jekyll-sitemap
+
+# Author
+author:
+  name: "IEEE IES Industrial AI Lab"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/IEEE-IES-Industrial-AI-Lab"
+    - label: "IEEE IES"
+      icon: "fas fa-fw fa-link"
+      url: "https://www.ieee-ies.org/"
+
+# Footer
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/IEEE-IES-Industrial-AI-Lab"
+    - label: "IEEE IES"
+      icon: "fas fa-fw fa-link"
+      url: "https://www.ieee-ies.org/"
+
+# Navigation
+navigation:
+  main:
+    - title: "Projects"
+      url: /industrial-ai-hub/projects/
+    - title: "Datasets"
+      url: /industrial-ai-hub/datasets/
+    - title: "Benchmarks"
+      url: /industrial-ai-hub/benchmarks/
+    - title: "GitHub ↗"
+      url: "https://github.com/IEEE-IES-Industrial-AI-Lab"
+
+# Include _pages in Jekyll build
+include:
+  - _pages
+
+# Page defaults
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: false
+      read_time: false
+      show_date: false
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+
+# Sass
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# HTML compression
+compress_html:
+  clippings: all
+  ignore:
+    envs: development

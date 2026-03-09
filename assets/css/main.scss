@@ -1,0 +1,211 @@
+---
+# Only the main scss file needs front matter (dashes are enough)
+---
+
+@charset "utf-8";
+
+// Override Minimal Mistakes skin variables with IEEE IES brand blue
+// These must be defined before the @import to override !default values
+$link-color: #00629B;
+$primary-color: #00629B;
+$masthead-link-color: #fff;
+$masthead-link-color-hover: rgba(255, 255, 255, 0.8);
+$navicon-link-color-hover: rgba(255, 255, 255, 0.8);
+
+@import "minimal-mistakes";
+
+// ── Masthead: IEEE blue background ────────────────────────────────────────────
+.masthead {
+  background-color: #00629B;
+  border-bottom: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+  .masthead__inner-wrap {
+    padding: 0.8em 1em;
+  }
+
+  .site-title {
+    color: #fff !important;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .greedy-nav {
+    background: transparent;
+
+    a {
+      color: #fff;
+      font-weight: 500;
+
+      &:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    .visible-links a::before {
+      background: rgba(255, 255, 255, 0.6);
+    }
+
+    button {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+      }
+    }
+
+    .hidden-links {
+      background: #004d7a;
+      border: none;
+
+      a {
+        color: #fff;
+        border-bottom-color: rgba(255, 255, 255, 0.1);
+
+        &:hover {
+          color: #fff;
+          background: rgba(255, 255, 255, 0.1);
+        }
+      }
+    }
+  }
+}
+
+// ── Hero / Splash header ──────────────────────────────────────────────────────
+.page__hero--overlay {
+  background-color: #004d7a;
+
+  .page__title {
+    font-size: 2.4em;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+    @media (min-width: 64em) {
+      font-size: 3.2em;
+    }
+  }
+
+  .page__lead {
+    font-size: 1.1em;
+    max-width: 640px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+
+    @media (min-width: 64em) {
+      font-size: 1.25em;
+    }
+  }
+}
+
+// ── Feature rows ─────────────────────────────────────────────────────────────
+.feature__wrapper {
+  border-bottom: none;
+  margin-bottom: 2em;
+}
+
+.feature__item {
+  .archive__item {
+    border-left: 4px solid #00629B;
+    padding: 1.2em 1.4em;
+    background: #fff;
+    border-radius: 0 6px 6px 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.07);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      box-shadow: 0 6px 18px rgba(0, 98, 155, 0.15);
+      transform: translateY(-2px);
+    }
+  }
+
+  .archive__item-title {
+    font-size: 1.1em;
+    font-weight: 700;
+    color: #00629B;
+    margin-top: 0;
+  }
+
+  .archive__item-excerpt {
+    font-size: 0.88em;
+    color: #4a5568;
+    line-height: 1.6;
+  }
+
+  // Alternating accent colors per card
+  &:nth-child(2) .archive__item { border-left-color: #7c3aed; }
+  &:nth-child(2) .archive__item-title { color: #7c3aed; }
+  &:nth-child(3) .archive__item { border-left-color: #dc2626; }
+  &:nth-child(3) .archive__item-title { color: #dc2626; }
+  &:nth-child(4) .archive__item { border-left-color: #16a34a; }
+  &:nth-child(4) .archive__item-title { color: #16a34a; }
+}
+
+// ── Intro / stats row ────────────────────────────────────────────────────────
+.feature__item--center {
+  .archive__item-body {
+    background: #f0f7ff;
+    border-radius: 8px;
+    padding: 1em 2em;
+    text-align: center;
+    font-size: 1.05em;
+    color: #1e3a5f;
+    border: 1px solid #b8d9f0;
+  }
+}
+
+// ── Section headings inside splash body ──────────────────────────────────────
+.splash-section-heading {
+  text-align: center;
+  font-size: 1.6em;
+  font-weight: 700;
+  color: #1e3a5f;
+  margin: 2.5em 0 0.25em;
+  padding-bottom: 0.4em;
+  border-bottom: 3px solid #00629B;
+  display: inline-block;
+}
+
+.splash-section-sub {
+  text-align: center;
+  color: #64748b;
+  font-size: 0.95em;
+  margin-bottom: 1.5em;
+}
+
+.splash-section-wrap {
+  text-align: center;
+}
+
+// ── Buttons ──────────────────────────────────────────────────────────────────
+.btn--primary {
+  background-color: #00629B !important;
+  border-color: #00629B !important;
+
+  &:hover {
+    background-color: #004d7a !important;
+    border-color: #004d7a !important;
+  }
+}
+
+// ── Footer ───────────────────────────────────────────────────────────────────
+.page__footer {
+  background-color: #1e3a5f;
+
+  footer {
+    color: rgba(255, 255, 255, 0.75);
+  }
+
+  a {
+    color: rgba(255, 255, 255, 0.9);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  .page__footer-copyright {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.8em;
+  }
+}
