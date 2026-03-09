@@ -18,6 +18,10 @@ plugins:
   - jekyll-include-cache
   - jekyll-sitemap
 
+# Hide the Atom feed link from the footer (no blog posts on this site)
+atom_feed:
+  hide: true
+
 # Author
 author:
   name: "IEEE IES Industrial AI Lab"
