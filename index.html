@@ -122,17 +122,11 @@ h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; margin-bottom: 0.8
   padding: 2rem; display: flex; gap: 2rem; align-items: flex-start;
   border-top: 2px solid var(--cyan); margin-bottom: 3rem;
 }
-.affil-logos { display: flex; gap: 1rem; flex-shrink: 0; align-items: center; }
-.logo-box {
-  background: rgba(0,0,0,0.4); border: 1px solid var(--border);
-  border-radius: 8px; padding: 0.6rem 0.8rem;
-  display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
-  min-width: 80px;
+.affil-logos { display: flex; flex-shrink: 0; align-items: center; }
+.ies-logo-wrap {
+  padding: 0.5rem 0;
+  filter: drop-shadow(0 0 12px rgba(0,98,155,0.4));
 }
-.logo-ieee { font-family: var(--mono); font-size: 1.1rem; font-weight: 900; color: var(--cyan); }
-.logo-sub { font-family: var(--mono); font-size: 0.55rem; color: var(--text3); text-align: center; letter-spacing: 0.08em; line-height: 1.4; }
-.logo-badge { background: var(--blue); color: white; font-family: var(--mono); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; }
-.affil-sep { width: 1px; height: 60px; background: var(--border); }
 .affil-content { flex: 1; }
 .affil-title { font-size: 0.88rem; font-weight: 700; color: var(--cyan); font-family: var(--mono); margin-bottom: 0.6rem; }
 .affil-text { color: var(--text2); font-size: 0.85rem; line-height: 1.7; margin-bottom: 1rem; }
@@ -711,27 +705,19 @@ footer {
     <!-- Affiliation Banner -->
     <div class="affil-box">
       <div class="affil-logos">
-        <div class="logo-box">
-          <div class="logo-ieee">IEEE</div>
-          <div class="logo-badge">IES</div>
-          <div class="logo-sub">INDUSTRIAL<br>ELECTRONICS<br>SOCIETY</div>
-        </div>
-        <div class="affil-sep"></div>
-        <div class="logo-box">
-          <div class="logo-ieee">IEEE</div>
-          <div class="logo-badge">SB</div>
-          <div class="logo-sub">E-JUST<br>STUDENT<br>BRANCH</div>
+        <!-- IEEE IES Official Logo Recreation (white, transparent bg) -->
+        <div class="ies-logo-wrap">
+          <img src="assets/ies.png" alt="IEEE Industrial Electronics Society" height="80"/>
         </div>
       </div>
       <div class="affil-content">
-        <div class="affil-title">IEEE IES Volunteer Initiative — Not an Official Chapter</div>
+        <div class="affil-title">IEEE IES Volunteer Initiative</div>
         <p class="affil-text">
-          This lab is an <strong>independent volunteer initiative</strong> created to combine all industrial electronics AI projects into one open research lab. Built by <strong>IEEE E-JUST Student Branch</strong> members who are active volunteers in the <strong>IEEE Industrial Electronics Society</strong>. It is <em>not an official IEEE IES chapter or branch</em> — it is created independently in the spirit of IEEE's mission: advancing technology for humanity, aligned with IES publication tracks (TIE, TII, JESTPE, IECON).
+          This lab is an <strong>independent volunteer initiative</strong> created to combine all industrial electronics AI projects into one open research lab. Built by <strong>IEEE E-JUST Student Branch</strong> active members who are volunteers in the <strong>IEEE Industrial Electronics Society</strong>. It is <em>not an official IEEE IES chapter or branch</em> — it is created independently in the spirit of IEEE's mission: advancing technology for humanity, aligned with IES publication tracks (TIE, TII, JESTPE, IECON).
         </p>
         <div class="affil-pills">
           <span class="pill">🌍 IEEE IES Society Volunteers</span>
           <span class="pill">🎓 IEEE E-JUST Student Branch</span>
-          <span class="pill">🔬 Independent — Not a Chapter</span>
           <span class="pill">📖 Open Benchmarks · MIT License</span>
         </div>
       </div>
@@ -767,7 +753,7 @@ footer {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               LinkedIn
             </a>
-            <a href="mailto:assem.elqersh.eg@ieee.org" class="alink">✉ IEEE Email</a>
+            <a href="/cdn-cgi/l/email-protection#6405171701094a0108150116170c4a0103240d0101014a0b1603" class="alink">✉ IEEE Email</a>
           </div>
         </div>
       </div>
@@ -800,7 +786,7 @@ footer {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
               LinkedIn
             </a>
-            <a href="mailto:abdelrahman.wael@ieee.org" class="alink">✉ IEEE Email</a>
+            <a href="/cdn-cgi/l/email-protection#5e3f3c3a3b322c3f36333f3070293f3b321e373b3b3b70312c39" class="alink">✉ IEEE Email</a>
           </div>
         </div>
       </div>
@@ -880,7 +866,7 @@ footer {
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 function showTab(id, btn) {
   document.querySelectorAll('.bpanel').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.btab').forEach(b => b.classList.remove('active'));
