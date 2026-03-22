@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>IEEE IES Industrial AI Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --blue: #00629B;
+  --blue-light: #0081cc;
+  --cyan: #00c8e0;
+  --gold: #f0a500;
+  --green: #00d4a0;
+  --red: #ff4d6d;
+  --bg: #030912;
+  --surface: #0d1f35;
+  --surface2: #112540;
+  --border: rgba(0,98,155,0.3);
+  --text: #e8f4ff;
+  --text2: #8ab4d4;
+  --text3: #4a7a9b;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Outfit', sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); overflow-x: hidden; }
+a { text-decoration: none; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(3,9,18,0.92); backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 2rem; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; font-size: 0.9rem; }
+.nav-logo-icon {
+  width: 30px; height: 30px; border-radius: 6px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem; font-weight: 800; color: white; font-family: var(--mono);
+}
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-links a { color: var(--text2); font-size: 0.82rem; font-weight: 600; transition: color 0.2s; }
+.nav-links a:hover { color: var(--cyan); }
+.nav-gh {
+  background: var(--blue); color: white; padding: 0.4rem 1rem;
+  border-radius: 6px; font-size: 0.78rem; font-weight: 700; transition: background 0.2s;
+}
+.nav-gh:hover { background: var(--blue-light); }
+@media(max-width:768px){ .nav-links { display: none; } }
+
+/* HERO */
+.hero {
+  min-height: 100vh; padding: 100px 0 60px;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,98,155,0.18) 0%, transparent 70%);
+  display: flex; align-items: center;
+}
+.hero-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(0,98,155,0.15); border: 1px solid rgba(0,98,155,0.4);
+  border-radius: 20px; padding: 0.35rem 1rem;
+  font-family: var(--mono); font-size: 0.72rem; color: var(--cyan);
+  margin-bottom: 1.5rem;
+}
+.hero-badge::before { content: '●'; color: var(--green); font-size: 0.45rem; }
+h1 { font-size: clamp(2rem, 4vw, 3.4rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.2rem; }
+h1 .t1 { display: block; color: var(--text); }
+h1 .t2 { display: block; color: var(--blue-light); }
+h1 .t3 { display: block; background: linear-gradient(90deg, var(--cyan), var(--blue-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-desc { color: var(--text2); font-size: 1rem; line-height: 1.7; margin-bottom: 2rem; }
+.hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+.btn-blue {
+  background: linear-gradient(135deg, var(--blue), var(--blue-light));
+  color: white; padding: 0.8rem 1.8rem; border-radius: 8px;
+  font-weight: 700; font-size: 0.88rem; transition: opacity 0.2s;
+}
+.btn-blue:hover { opacity: 0.85; }
+.btn-outline {
+  color: var(--text2); padding: 0.8rem 1.8rem; border-radius: 8px;
+  border: 1px solid var(--border); font-weight: 700; font-size: 0.88rem; transition: all 0.2s;
+}
+.btn-outline:hover { border-color: var(--cyan); color: var(--cyan); }
+.hero-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; text-align: center; }
+.stat-n { font-size: 1.9rem; font-weight: 800; color: var(--cyan); line-height: 1; }
+.stat-l { font-size: 0.7rem; color: var(--text3); font-family: var(--mono); margin-top: 0.3rem; }
+.terminal {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.t-bar {
+  background: var(--surface2); padding: 0.7rem 1rem;
+  display: flex; align-items: center; gap: 0.45rem; border-bottom: 1px solid var(--border);
+}
+.td { width: 10px; height: 10px; border-radius: 50%; }
+.td-r{background:#ff5f56;} .td-y{background:#ffbd2e;} .td-g{background:#27c93f;}
+.t-title { font-family: var(--mono); font-size: 0.72rem; color: var(--text3); margin-left: auto; }
+.t-body { padding: 1.4rem; font-family: var(--mono); font-size: 0.8rem; line-height: 1.9; }
+.tp{color:var(--green);} .tc{color:var(--text);} .tm{color:var(--cyan);font-weight:500;}
+.tg{color:var(--green);} .to{color:var(--text2);} .tw{color:var(--gold);}
+.tcur{display:inline-block;width:8px;height:14px;background:var(--cyan);animation:blink 1s infinite;vertical-align:middle;}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@media(max-width:900px){ .hero-inner{grid-template-columns:1fr;} }
+
+/* SECTIONS */
+section { padding: 5rem 0; }
+.sec-tag { font-family: var(--mono); font-size: 0.7rem; color: var(--cyan); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 0.5rem; }
+.sec-line { width: 48px; height: 3px; background: linear-gradient(90deg, var(--cyan), transparent); border-radius: 2px; margin-bottom: 1.2rem; }
+h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; margin-bottom: 0.8rem; }
+.sec-desc { color: var(--text2); font-size: 0.95rem; line-height: 1.7; max-width: 580px; margin-bottom: 2.5rem; }
+.divider { height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+
+/* AFFILIATION */
+.affil-box {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  padding: 2rem; display: flex; gap: 2rem; align-items: flex-start;
+  border-top: 2px solid var(--cyan); margin-bottom: 3rem;
+}
+.affil-logos { display: flex; gap: 1rem; flex-shrink: 0; align-items: center; }
+.logo-box {
+  background: rgba(0,0,0,0.4); border: 1px solid var(--border);
+  border-radius: 8px; padding: 0.6rem 0.8rem;
+  display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+  min-width: 80px;
+}
+.logo-ieee { font-family: var(--mono); font-size: 1.1rem; font-weight: 900; color: var(--cyan); }
+.logo-sub { font-family: var(--mono); font-size: 0.55rem; color: var(--text3); text-align: center; letter-spacing: 0.08em; line-height: 1.4; }
+.logo-badge { background: var(--blue); color: white; font-family: var(--mono); font-size: 0.75rem; font-weight: 700; padding: 0.2rem 0.5rem; border-radius: 4px; }
+.affil-sep { width: 1px; height: 60px; background: var(--border); }
+.affil-content { flex: 1; }
+.affil-title { font-size: 0.88rem; font-weight: 700; color: var(--cyan); font-family: var(--mono); margin-bottom: 0.6rem; }
+.affil-text { color: var(--text2); font-size: 0.85rem; line-height: 1.7; margin-bottom: 1rem; }
+.affil-text strong { color: var(--text); }
+.affil-text em { color: var(--gold); font-style: normal; font-weight: 600; }
+.affil-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pill {
+  font-family: var(--mono); font-size: 0.68rem; padding: 0.28rem 0.75rem;
+  border-radius: 20px; background: rgba(0,98,155,0.15);
+  border: 1px solid rgba(0,98,155,0.35); color: var(--text2);
+}
+@media(max-width:700px){ .affil-box{flex-direction:column;} .affil-logos{justify-content:center;} }
+
+/* PROJECT CARDS */
+.cards-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.5rem; }
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 14px; padding: 1.8rem; position: relative;
+  transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+.card[data-c="cyan"]:hover { border-color: var(--cyan); }
+.card[data-c="gold"]:hover { border-color: var(--gold); }
+.card[data-c="green"]:hover { border-color: var(--green); }
+.card[data-c="red"]:hover { border-color: var(--red); }
+.card-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; }
+.card-icon { font-size: 1.6rem; }
+.card-track {
+  font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.08em;
+  padding: 0.22rem 0.6rem; border-radius: 4px; border: 1px solid; opacity: 0.8;
+}
+.card[data-c="cyan"] .card-track { color: var(--cyan); border-color: var(--cyan); }
+.card[data-c="gold"] .card-track { color: var(--gold); border-color: var(--gold); }
+.card[data-c="green"] .card-track { color: var(--green); border-color: var(--green); }
+.card[data-c="red"] .card-track { color: var(--red); border-color: var(--red); }
+.card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+.card-desc { color: var(--text2); font-size: 0.85rem; line-height: 1.6; margin-bottom: 1.1rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1.1rem; }
+.tag {
+  font-family: var(--mono); font-size: 0.65rem; padding: 0.18rem 0.55rem;
+  border-radius: 4px; background: rgba(0,0,0,0.35); border: 1px solid var(--border); color: var(--text3);
+}
+.metrics { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.6rem; margin-bottom: 1.3rem; }
+.met {
+  background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+  border-radius: 7px; padding: 0.55rem; text-align: center;
+}
+.met-v { font-family: var(--mono); font-size: 0.9rem; font-weight: 700; }
+.card[data-c="cyan"] .met-v { color: var(--cyan); }
+.card[data-c="gold"] .met-v { color: var(--gold); }
+.card[data-c="green"] .met-v { color: var(--green); }
+.card[data-c="red"] .met-v { color: var(--red); }
+.met-k { font-family: var(--mono); font-size: 0.6rem; color: var(--text3); margin-top: 0.1rem; }
+.card-foot { display: flex; justify-content: space-between; align-items: center; }
+.card-link { font-size: 0.82rem; font-weight: 600; transition: gap 0.2s; display: flex; align-items: center; gap: 0.35rem; }
+.card[data-c="cyan"] .card-link { color: var(--cyan); }
+.card[data-c="gold"] .card-link { color: var(--gold); }
+.card[data-c="green"] .card-link { color: var(--green); }
+.card[data-c="red"] .card-link { color: var(--red); }
+.card-link:hover { gap: 0.6rem; }
+.status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); display: inline-block; animation: pulse 2s infinite; }
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.status-txt { font-family: var(--mono); font-size: 0.68rem; color: var(--text3); display: flex; align-items: center; gap: 0.35rem; }
+@media(max-width:700px){ .cards-grid{grid-template-columns:1fr;} }
+
+/* BENCHMARKS */
+.bench-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.btab {
+  padding: 0.55rem 1.1rem; border-radius: 7px; font-size: 0.8rem; font-weight: 600;
+  cursor: pointer; border: 1px solid var(--border); background: transparent;
+  color: var(--text2); transition: all 0.2s; font-family: var(--sans);
+}
+.btab.active { background: var(--blue); border-color: var(--blue-light); color: white; }
+.btab:hover:not(.active) { border-color: var(--cyan); color: var(--cyan); }
+.bpanel { display: none; }
+.bpanel.active { display: block; }
+.table-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.bench-note {
+  background: rgba(0,98,155,0.1); border-bottom: 1px solid var(--border);
+  padding: 0.65rem 1.4rem; font-family: var(--mono); font-size: 0.72rem; color: var(--text3);
+}
+.bench-note span { color: var(--gold); }
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  padding: 0.9rem 1.4rem; text-align: left; font-family: var(--mono);
+  font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--text3); background: var(--surface2); border-bottom: 1px solid var(--border);
+}
+tbody tr { border-bottom: 1px solid rgba(0,98,155,0.1); transition: background 0.15s; }
+tbody tr:last-child { border-bottom: none; }
+tbody tr:hover { background: rgba(0,98,155,0.07); }
+td { padding: 0.85rem 1.4rem; font-size: 0.86rem; color: var(--text2); }
+td:first-child { color: var(--text); font-weight: 600; }
+.best { color: var(--green) !important; font-weight: 700; }
+.mbadge {
+  font-family: var(--mono); font-size: 0.62rem; padding: 0.18rem 0.48rem;
+  border-radius: 4px; background: rgba(240,165,0,0.12); border: 1px solid rgba(240,165,0,0.3); color: var(--gold);
+}
+
+/* DATASETS */
+.ds-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.ds-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 11px;
+  padding: 1.2rem; transition: border-color 0.2s, transform 0.2s;
+}
+.ds-card:hover { border-color: var(--blue-light); transform: translateY(-2px); }
+.ds-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.6rem; }
+.ds-name { font-weight: 700; font-size: 0.92rem; }
+.ds-badge { font-family: var(--mono); font-size: 0.6rem; padding: 0.18rem 0.5rem; border-radius: 4px; font-weight: 700; }
+.free { background: rgba(0,212,160,0.12); color: var(--green); border: 1px solid rgba(0,212,160,0.3); }
+.request { background: rgba(240,165,0,0.12); color: var(--gold); border: 1px solid rgba(240,165,0,0.3); }
+.license { background: rgba(255,77,109,0.12); color: var(--red); border: 1px solid rgba(255,77,109,0.3); }
+.builtin { background: rgba(0,98,155,0.15); color: var(--cyan); border: 1px solid rgba(0,98,155,0.3); }
+.ds-desc { color: var(--text3); font-size: 0.78rem; line-height: 1.5; margin-bottom: 0.6rem; }
+.ds-meta { display: flex; gap: 1rem; flex-wrap: wrap; }
+.ds-meta span { font-family: var(--mono); font-size: 0.68rem; color: var(--text3); }
+.ds-meta strong { color: var(--cyan); }
+.ds-warn { margin-top: 0.5rem; font-family: var(--mono); font-size: 0.68rem; color: var(--gold); }
+@media(max-width:900px){ .ds-grid{grid-template-columns:repeat(2,1fr);} }
+@media(max-width:500px){ .ds-grid{grid-template-columns:1fr;} }
+
+/* ARCH */
+.arch-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.arch-step { background: var(--surface); padding: 1.5rem; transition: background 0.2s; }
+.arch-step:hover { background: var(--surface2); }
+.arch-n { font-family: var(--mono); font-size: 0.6rem; color: var(--text3); letter-spacing: 0.15em; margin-bottom: 0.6rem; }
+.arch-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+.arch-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; }
+.arch-list { list-style: none; }
+.arch-list li { font-family: var(--mono); font-size: 0.74rem; color: var(--text3); padding: 0.12rem 0; }
+.arch-list li::before { content: '→ '; color: var(--cyan); }
+@media(max-width:700px){ .arch-grid{grid-template-columns:repeat(2,1fr);} }
+
+/* AUTHORS */
+.authors-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 2rem; }
+.author-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 2rem; display: flex; gap: 1.5rem; align-items: flex-start;
+  border-top: 2px solid var(--cyan);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.author-card:nth-child(2) { border-top-color: var(--gold); }
+.author-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+.avatar-wrap { position: relative; flex-shrink: 0; width: 90px; height: 90px; }
+.avatar {
+  width: 90px; height: 90px; border-radius: 50%; overflow: hidden;
+  border: 2px solid var(--border); background: var(--surface2);
+  display: flex; align-items: center; justify-content: center;
+}
+.avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.av-fallback {
+  width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; font-weight: 800; color: white;
+  background: linear-gradient(135deg, var(--blue), var(--cyan));
+}
+.avatar-ring {
+  position: absolute; inset: -5px; border-radius: 50%;
+  border: 1.5px solid var(--cyan); opacity: 0.5;
+  animation: spin 10s linear infinite;
+}
+.author-card:nth-child(2) .avatar-ring { border-color: var(--gold); }
+@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+.author-info { flex: 1; }
+.author-name { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.2rem; }
+.author-role { font-family: var(--mono); font-size: 0.78rem; color: var(--cyan); margin-bottom: 0.75rem; font-weight: 500; }
+.author-card:nth-child(2) .author-role { color: var(--gold); }
+.author-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.8rem; }
+.atag {
+  font-family: var(--mono); font-size: 0.64rem; padding: 0.2rem 0.55rem;
+  border-radius: 4px; background: rgba(0,0,0,0.3); border: 1px solid rgba(0,200,224,0.2); color: var(--text3);
+}
+.author-card:nth-child(2) .atag { border-color: rgba(240,165,0,0.2); }
+.author-bio { color: var(--text2); font-size: 0.83rem; line-height: 1.65; margin-bottom: 1rem; }
+.author-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.alink {
+  display: flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; font-weight: 600;
+  padding: 0.3rem 0.75rem; border-radius: 6px; border: 1px solid rgba(0,200,224,0.25);
+  background: rgba(0,200,224,0.05); color: var(--cyan); transition: all 0.2s;
+}
+.alink:hover { background: rgba(0,200,224,0.12); }
+.author-card:nth-child(2) .alink { color: var(--gold); border-color: rgba(240,165,0,0.25); background: rgba(240,165,0,0.05); }
+.author-card:nth-child(2) .alink:hover { background: rgba(240,165,0,0.12); }
+@media(max-width:800px){ .authors-grid{grid-template-columns:1fr;} .author-card{flex-direction:column;align-items:center;text-align:center;} .author-links{justify-content:center;} .author-tags{justify-content:center;} }
+
+/* CITATION */
+.cite-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.cite-hdr {
+  background: var(--surface2); padding: 0.7rem 1.4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--border);
+}
+.cite-hdr-t { font-family: var(--mono); font-size: 0.75rem; color: var(--text2); }
+.cite-btn {
+  background: var(--blue); color: white; border: none; padding: 0.32rem 0.85rem;
+  border-radius: 5px; font-size: 0.73rem; font-weight: 700; cursor: pointer;
+  font-family: var(--sans); transition: background 0.2s;
+}
+.cite-btn:hover { background: var(--blue-light); }
+.cite-body { padding: 1.4rem; font-family: var(--mono); font-size: 0.78rem; line-height: 1.9; overflow-x: auto; }
+.ck { color: var(--cyan); } .cv { color: var(--gold); } .cb { color: var(--text3); }
+
+/* CONTRIB */
+.contrib-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+.contrib-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+  padding: 1.4rem; text-align: center; transition: border-color 0.2s, transform 0.2s;
+}
+.contrib-card:hover { border-color: var(--cyan); transform: translateY(-2px); }
+.contrib-icon { font-size: 1.8rem; margin-bottom: 0.6rem; }
+.contrib-title { font-weight: 700; margin-bottom: 0.4rem; font-size: 0.95rem; }
+.contrib-desc { color: var(--text2); font-size: 0.82rem; line-height: 1.6; }
+@media(max-width:700px){ .contrib-grid{grid-template-columns:1fr;} }
+
+/* FOOTER */
+footer {
+  border-top: 1px solid var(--border); padding: 2.5rem 0;
+  background: rgba(0,0,0,0.2);
+}
+.footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+.footer-logo { font-weight: 700; font-size: 0.9rem; }
+.footer-links { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+.footer-links a { color: var(--text3); font-size: 0.82rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--cyan); }
+.footer-copy { font-family: var(--mono); font-size: 0.72rem; color: var(--text3); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">IES</div>
+    IEEE IES Industrial AI Lab
+  </div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#benchmarks">Benchmarks</a></li>
+    <li><a href="#datasets">Datasets</a></li>
+    <li><a href="#authors">Authors</a></li>
+    <li><a href="#citation">Citation</a></li>
+  </ul>
+  <a href="https://github.com/IEEE-IES-Industrial-AI-Lab" target="_blank" class="nav-gh">GitHub ↗</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge">ACTIVE RESEARCH · IEEE IES · OPEN BENCHMARKS</div>
+        <h1>
+          <span class="t1">Industrial AI</span>
+          <span class="t2">Research Lab</span>
+          <span class="t3">IEEE IES Initiative</span>
+        </h1>
+        <p class="hero-desc">Open benchmarking initiative for industrial AI, aligned with IEEE Industrial Electronics Society publication tracks — TIE, TII, JESTPE, and IECON. Reproducible baselines. Real datasets. Honest numbers.</p>
+        <div class="hero-btns">
+          <a href="#projects" class="btn-blue">Explore Projects →</a>
+          <a href="https://github.com/IEEE-IES-Industrial-AI-Lab" target="_blank" class="btn-outline">View on GitHub</a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat"><div class="stat-n">4</div><div class="stat-l">Repositories</div></div>
+          <div class="stat"><div class="stat-n">15+</div><div class="stat-l">Model Impls</div></div>
+          <div class="stat"><div class="stat-n">10+</div><div class="stat-l">Datasets</div></div>
+        </div>
+      </div>
+      <div class="terminal">
+        <div class="t-bar">
+          <div class="td td-r"></div><div class="td td-y"></div><div class="td td-g"></div>
+          <div class="t-title">benchmark_runner.py</div>
+        </div>
+        <div class="t-body">
+<span class="tp">$ </span><span class="tc">python benchmarks/run_benchmarks.py --dataset FD001 --all-models</span><br>
+<span class="to"># NASA CMAPSS FD001 · seed=42 · window=30</span><br>
+<span class="to">Train: </span><span class="tm">(17631, 30, 14)</span><span class="to">  Test: </span><span class="tm">(100, 30, 14)</span><br><br>
+<span class="to">  Running </span><span class="tm">LSTM</span><span class="to"> ...</span><br>
+<span class="to">    RMSE: </span><span class="tg">13.42</span><span class="to"> · NASA↓: </span><span class="tg">214.3</span><br>
+<span class="to">  Running </span><span class="tm">Transformer</span><span class="to"> ...</span><br>
+<span class="to">    RMSE: </span><span class="tg">12.89</span><span class="to"> · NASA↓: </span><span class="tg">198.7</span><br>
+<span class="to">  Running </span><span class="tm">TCN</span><span class="to"> ...</span><br>
+<span class="to">    RMSE: </span><span class="tg">13.15</span><span class="to"> · NASA↓: </span><span class="tg">207.1</span><br><br>
+<span class="tg">✓ Results → benchmarks/results/results_FD001.json</span><br>
+<span class="tp">$ </span><span class="tcur"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="sec-tag">// 01 — REPOSITORIES</div>
+    <div class="sec-line"></div>
+    <h2>Four Research Repositories</h2>
+    <p class="sec-desc">Each repository targets a specific IEEE IES publication track with real implementations, runnable benchmarks, and honest results.</p>
+    <div class="cards-grid">
+
+      <div class="card" data-c="cyan">
+        <div class="card-top"><div class="card-icon">🔧</div><div class="card-track">TIE / TII</div></div>
+        <h3>Industrial Predictive Maintenance</h3>
+        <p class="card-desc">RUL prediction and fault detection for turbofan engines and rolling element bearings. End-to-end pipeline from raw sensor data to deployment-ready inference.</p>
+        <div class="tags">
+          <span class="tag">CMAPSS</span><span class="tag">CWRU</span><span class="tag">IMS</span>
+          <span class="tag">Paderborn</span><span class="tag">LSTM</span><span class="tag">Transformer</span><span class="tag">TCN</span>
+        </div>
+        <div class="metrics">
+          <div class="met"><div class="met-v">13.42</div><div class="met-k">RMSE↓</div></div>
+          <div class="met"><div class="met-v">198.7</div><div class="met-k">NASA↓</div></div>
+          <div class="met"><div class="met-v">4</div><div class="met-k">Models</div></div>
+        </div>
+        <div class="card-foot">
+          <a href="https://github.com/IEEE-IES-Industrial-AI-Lab/Industrial-Predictive-Maintenance" target="_blank" class="card-link">View Repository →</a>
+          <div class="status-txt"><span class="status-dot"></span> Active</div>
+        </div>
+      </div>
+
+      <div class="card" data-c="gold">
+        <div class="card-top"><div class="card-icon">📈</div><div class="card-track">TII</div></div>
+        <h3>Industrial Time-Series AI</h3>
+        <p class="card-desc">SOTA time-series models for industrial sensor streams — multivariate forecasting, anomaly detection, and feature engineering for ICS/SCADA systems.</p>
+        <div class="tags">
+          <span class="tag">ETTh1/h2</span><span class="tag">SWaT</span><span class="tag">PSM</span>
+          <span class="tag">PatchTST</span><span class="tag">DLinear</span><span class="tag">Point-Adjust</span>
+        </div>
+        <div class="metrics">
+          <div class="met"><div class="met-v">0.9999</div><div class="met-k">ROC-AUC</div></div>
+          <div class="met"><div class="met-v">1.000</div><div class="met-k">F1-PA</div></div>
+          <div class="met"><div class="met-v">5</div><div class="met-k">Models</div></div>
+        </div>
+        <div class="card-foot">
+          <a href="https://github.com/IEEE-IES-Industrial-AI-Lab/Industrial-Time-Series-AI" target="_blank" class="card-link">View Repository →</a>
+          <div class="status-txt"><span class="status-dot"></span> Active</div>
+        </div>
+      </div>
+
+      <div class="card" data-c="green">
+        <div class="card-top"><div class="card-icon">⚡</div><div class="card-track">JESTPE / TIE</div></div>
+        <h3>AI Power Electronics Diagnostics</h3>
+        <p class="card-desc">Fault detection in 3-phase VSI inverters and PMSM motor drives. Physics-informed synthetic data — runs out of the box, no download needed.</p>
+        <div class="tags">
+          <span class="tag">Inverter</span><span class="tag">IGBT Fault</span><span class="tag">Motor Drive</span>
+          <span class="tag">1D CNN</span><span class="tag">BiLSTM</span><span class="tag">STFT</span>
+        </div>
+        <div class="metrics">
+          <div class="met"><div class="met-v">77.9%</div><div class="met-k">Acc</div></div>
+          <div class="met"><div class="met-v">0.777</div><div class="met-k">Macro F1</div></div>
+          <div class="met"><div class="met-v">5</div><div class="met-k">Models</div></div>
+        </div>
+        <div class="card-foot">
+          <a href="https://github.com/IEEE-IES-Industrial-AI-Lab/AI-Power-Electronics-Diagnostics" target="_blank" class="card-link">View Repository →</a>
+          <div class="status-txt"><span class="status-dot"></span> Active</div>
+        </div>
+      </div>
+
+      <div class="card" data-c="red">
+        <div class="card-top"><div class="card-icon">🏭</div><div class="card-track">TII</div></div>
+        <h3>Smart Manufacturing AI</h3>
+        <p class="card-desc">Vision-based defect detection and quality inspection for industrial manufacturing. Focused on anomaly detection benchmarks aligned to IEEE IES TII standards.</p>
+        <div class="tags">
+          <span class="tag">MVTec AD</span><span class="tag">Defect Detection</span>
+          <span class="tag">Visual Inspection</span><span class="tag">Anomaly Detection</span>
+        </div>
+        <div class="metrics">
+          <div class="met"><div class="met-v">15</div><div class="met-k">Categories</div></div>
+          <div class="met"><div class="met-v">CNN</div><div class="met-k">Backbone</div></div>
+          <div class="met"><div class="met-v">🔧</div><div class="met-k">In Progress</div></div>
+        </div>
+        <div class="card-foot">
+          <a href="https://github.com/IEEE-IES-Industrial-AI-Lab/Smart-Manufacturing-AI" target="_blank" class="card-link">View Repository →</a>
+          <div class="status-txt"><span class="status-dot" style="background:var(--gold)"></span><span style="color:var(--gold)">In Progress</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BENCHMARKS -->
+<section id="benchmarks">
+  <div class="container">
+    <div class="sec-tag">// 02 — RESULTS</div>
+    <div class="sec-line"></div>
+    <h2>Benchmark Results</h2>
+    <p class="sec-desc">Reproducible results. Seed 42. Official train/test splits. Real numbers — no ranges, no estimates.</p>
+    <div class="bench-tabs">
+      <button class="btab active" onclick="showTab('rul',this)">RUL Prediction</button>
+      <button class="btab" onclick="showTab('inv',this)">Inverter Faults</button>
+      <button class="btab" onclick="showTab('mot',this)">Motor Drive</button>
+      <button class="btab" onclick="showTab('ano',this)">Anomaly Detection</button>
+    </div>
+    <div class="bpanel active" id="tab-rul">
+      <div class="table-wrap">
+        <div class="bench-note">NASA CMAPSS FD001 · Window: 30 · Max RUL: 125 · <span>Seed: 42</span> · Official NASA split</div>
+        <table><thead><tr><th>Model</th><th>RMSE ↓</th><th>MAE ↓</th><th>NASA Score ↓</th><th>Params</th></tr></thead>
+        <tbody>
+          <tr><td>Transformer</td><td class="best">12.89</td><td class="best">9.71</td><td class="best">198.7</td><td>412K</td></tr>
+          <tr><td>TCN</td><td>13.15</td><td>10.05</td><td>207.1</td><td>287K</td></tr>
+          <tr><td>LSTM + Attention</td><td>13.42</td><td>10.28</td><td>214.3</td><td>523K</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div class="bpanel" id="tab-inv">
+      <div class="table-wrap">
+        <div class="bench-note">Synthetic Inverter · 9 classes · Quick mode: 5 epochs, 50 samples/class · <span>Seed: 42</span> · 70/15/15 split</div>
+        <table><thead><tr><th>Model</th><th>Accuracy</th><th>Macro F1</th><th>Params</th><th>Mode</th></tr></thead>
+        <tbody>
+          <tr><td>BiLSTM + Attention</td><td class="best">77.94%</td><td class="best">0.777</td><td>2.2M</td><td><span class="mbadge">quick 5ep</span></td></tr>
+          <tr><td>1D CNN Waveform</td><td>73.53%</td><td>0.687</td><td>4.0M</td><td><span class="mbadge">quick 5ep</span></td></tr>
+          <tr><td>Spectrogram CNN</td><td>36.76%</td><td>0.315</td><td>11.2M</td><td><span class="mbadge">quick 5ep</span></td></tr>
+          <tr><td>Transformer</td><td>32.35%</td><td>0.251</td><td>0.8M</td><td><span class="mbadge">quick 5ep</span></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div class="bpanel" id="tab-mot">
+      <div class="table-wrap">
+        <div class="bench-note">Synthetic Motor Drive · 5 classes · Quick mode: 5 epochs, 50 samples/class · <span>Seed: 42</span></div>
+        <table><thead><tr><th>Model</th><th>Accuracy</th><th>Macro F1</th><th>Params</th><th>Mode</th></tr></thead>
+        <tbody>
+          <tr><td>BiLSTM + Attention</td><td class="best">63.16%</td><td class="best">0.594</td><td>2.2M</td><td><span class="mbadge">quick 5ep</span></td></tr>
+          <tr><td>Spectrogram CNN</td><td>50.00%</td><td>0.417</td><td>11.2M</td><td><span class="mbadge">quick 5ep</span></td></tr>
+          <tr><td>1D CNN Waveform</td><td>44.74%</td><td>0.409</td><td>4.0M</td><td><span class="mbadge">quick 5ep</span></td></tr>
+          <tr><td>Transformer</td><td>21.05%</td><td>0.070</td><td>0.8M</td><td><span class="mbadge">quick 5ep</span></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div class="bpanel" id="tab-ano">
+      <div class="table-wrap">
+        <div class="bench-note">Synthetic SWaT · 51 features · 3 epochs · <span>Seed: 42</span> · Unsupervised</div>
+        <table><thead><tr><th>Model</th><th>ROC-AUC</th><th>F1</th><th>F1-PA</th><th>Params</th></tr></thead>
+        <tbody>
+          <tr><td>LSTM Autoencoder</td><td class="best">0.9999</td><td class="best">0.9981</td><td class="best">1.0000</td><td>108K</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- DATASETS -->
+<section id="datasets">
+  <div class="container">
+    <div class="sec-tag">// 03 — DATA</div>
+    <div class="sec-line"></div>
+    <h2>Benchmark Datasets</h2>
+    <p class="sec-desc">10+ industrial datasets across all four repositories. Access requirements and known gotchas documented for each.</p>
+    <div class="ds-grid">
+      <div class="ds-card">
+        <div class="ds-top"><div class="ds-name">NASA CMAPSS</div><span class="ds-badge free">Free</span></div>
+        <div class="ds-desc">Turbofan engine run-to-failure. FD001–FD004. Auto-downloads via loader.</div>
+        <div class="ds-meta"><span>Sensors: <strong>21</strong></span><span>Cycles: <strong>~70K</strong></span></div>
+        <div class="ds-warn">⚠ CMAPSS ≠ N-CMAPSS — different datasets.</div>
+      </div>
+      <div class="ds-card">
+        <div class="ds-top"><div class="ds-name">N-CMAPSS (2021)</div><span class="ds-badge free">Free</span></div>
+        <div class="ds-desc">Updated NASA turbofan used in recent TII papers. Roadmap item.</div>
+        <div class="ds-meta"><span>Year: <strong>2021</strong></span><span>Sensors: <strong>18</strong></span></div>
+        <div class="ds-warn">⚠ Most post-2021 papers use this version.</div>
+      </div>
+      <div class="ds-card">
+        <div class="ds-top"><div class="ds-name">CWRU Bearing</div><span class="ds-badge free">Free</span></div>
+        <div class="ds-desc">Case Western Reserve bearing vibration. Four fault types and sizes.</div>
+        <div class="ds-meta"><span>Loads: <strong>0–3 HP</strong></span><span>Faults: <strong>4 types</strong></span></div>
+        <div class="ds-warn">⚠ Specify motor load when comparing baselines.</div>
+      </div>
+      <div class="ds-card">
+        <div class="ds-top"><div class="ds-name">Paderborn Bearing</div><span class="ds-badge free">Free</span></div>
+        <div class="ds-desc">32 operating conditions. Artificial and real damage. Registration required.</div>
+        <div class="ds-meta"><span>Conditions: <strong>32</strong></span><span>Size: <strong>~32 GB</strong></span></div>
+        <div class="ds-warn">⚠ Use official Paderborn split protocol.</div>
+      </div>
+      <div class="ds-card">
+        <div class="ds-top"><div class="ds-name">ETTh1 / ETTm1</div><span class="ds-badge free">Free</span></div>
+        <div class="ds-desc">Electricity transformer temperature. Standard forecasting benchmark.</div>
+        <div class="ds-meta"><span>Features: <strong>7</strong></span><span>Variants: <strong>4</strong></span></div>
+      </div>
+      <div class="ds-card">
+        <div class="ds-top"><div class="ds-name">SWaT / WADI</div><span class="ds-badge request">Request</span></div>
+        <div class="ds-desc">Water treatment ICS datasets. Formal access request to iTrust Singapore.</div>
+        <div class="ds-meta"><span>SWaT: <strong>51 feat</strong></span><span>WADI: <strong>123 feat</strong></span></div>
+        <div class="ds-warn">⚠ Apply at itrust.sutd.edu.sg</div>
+      </div>
+      <div class="ds-card">
+        <div class="ds-top"><div class="ds-name">PSM / SMAP / MSL</div><span class="ds-badge free">Free</span></div>
+        <div class="ds-desc">Server metrics and NASA telemetry anomaly detection benchmarks.</div>
+        <div class="ds-meta"><span>PSM: <strong>25 feat</strong></span></div>
+      </div>
+      <div class="ds-card">
+        <div class="ds-top"><div class="ds-name">MVTec AD</div><span class="ds-badge license">License</span></div>
+        <div class="ds-desc">15 industrial categories for visual defect detection. Non-commercial only.</div>
+        <div class="ds-meta"><span>Categories: <strong>15</strong></span><span>Images: <strong>~5K</strong></span></div>
+        <div class="ds-warn">⚠ Cannot be redistributed. mvtec.com only.</div>
+      </div>
+      <div class="ds-card">
+        <div class="ds-top"><div class="ds-name">Synthetic Signals</div><span class="ds-badge builtin">Built-in</span></div>
+        <div class="ds-desc">Physics-informed inverter and motor drive signals. No download needed.</div>
+        <div class="ds-meta"><span>Inverter: <strong>9 faults</strong></span><span>Motor: <strong>5 faults</strong></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ARCHITECTURE -->
+<section id="architecture">
+  <div class="container">
+    <div class="sec-tag">// 04 — PIPELINE</div>
+    <div class="sec-line"></div>
+    <h2>Shared Pipeline Architecture</h2>
+    <p class="sec-desc">All four repos follow the same end-to-end pipeline from raw industrial sensor data to deployment-ready inference.</p>
+    <div class="arch-grid">
+      <div class="arch-step">
+        <div class="arch-n">STEP 01</div>
+        <div class="arch-icon">📥</div>
+        <div class="arch-name">Data Ingestion</div>
+        <ul class="arch-list">
+          <li>Dataset loaders</li>
+          <li>Auto-download scripts</li>
+          <li>Format normalization</li>
+          <li>Train/test splits</li>
+        </ul>
+      </div>
+      <div class="arch-step">
+        <div class="arch-n">STEP 02</div>
+        <div class="arch-icon">⚙️</div>
+        <div class="arch-name">Preprocessing</div>
+        <ul class="arch-list">
+          <li>Signal cleaning</li>
+          <li>Min-max normalization</li>
+          <li>Sliding windows</li>
+          <li>STFT / FFT</li>
+        </ul>
+      </div>
+      <div class="arch-step">
+        <div class="arch-n">STEP 03</div>
+        <div class="arch-icon">🧠</div>
+        <div class="arch-name">Model Training</div>
+        <ul class="arch-list">
+          <li>LSTM / Transformer / TCN</li>
+          <li>1D CNN / BiLSTM</li>
+          <li>Autoencoder anomaly</li>
+          <li>Early stopping + ckpts</li>
+        </ul>
+      </div>
+      <div class="arch-step">
+        <div class="arch-n">STEP 04</div>
+        <div class="arch-icon">📊</div>
+        <div class="arch-name">Evaluation</div>
+        <ul class="arch-list">
+          <li>RMSE / MAE / NASA score</li>
+          <li>F1 / ROC-AUC / F1-PA</li>
+          <li>CSV output + JSON</li>
+          <li>Markdown result tables</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AUTHORS -->
+<section id="authors">
+  <div class="container">
+    <div class="sec-tag">// 05 — TEAM</div>
+    <div class="sec-line"></div>
+    <h2>Authors</h2>
+    <p class="sec-desc">The people behind the IEEE IES Industrial AI Lab initiative.</p>
+
+    <!-- Affiliation Banner -->
+    <div class="affil-box">
+      <div class="affil-logos">
+        <div class="logo-box">
+          <div class="logo-ieee">IEEE</div>
+          <div class="logo-badge">IES</div>
+          <div class="logo-sub">INDUSTRIAL<br>ELECTRONICS<br>SOCIETY</div>
+        </div>
+        <div class="affil-sep"></div>
+        <div class="logo-box">
+          <div class="logo-ieee">IEEE</div>
+          <div class="logo-badge">SB</div>
+          <div class="logo-sub">E-JUST<br>STUDENT<br>BRANCH</div>
+        </div>
+      </div>
+      <div class="affil-content">
+        <div class="affil-title">IEEE IES Volunteer Initiative — Not an Official Chapter</div>
+        <p class="affil-text">
+          This lab is an <strong>independent volunteer initiative</strong> created to combine all industrial electronics AI projects into one open research lab. Built by <strong>IEEE E-JUST Student Branch</strong> members who are active volunteers in the <strong>IEEE Industrial Electronics Society</strong>. It is <em>not an official IEEE IES chapter or branch</em> — it is created independently in the spirit of IEEE's mission: advancing technology for humanity, aligned with IES publication tracks (TIE, TII, JESTPE, IECON).
+        </p>
+        <div class="affil-pills">
+          <span class="pill">🌍 IEEE IES Society Volunteers</span>
+          <span class="pill">🎓 IEEE E-JUST Student Branch</span>
+          <span class="pill">🔬 Independent — Not a Chapter</span>
+          <span class="pill">📖 Open Benchmarks · MIT License</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="authors-grid">
+
+      <!-- Assem -->
+      <div class="author-card">
+        <div class="avatar-wrap">
+          <div class="avatar">
+            <img src="https://avatars.githubusercontent.com/u/95103601?v=4" alt="Assem"
+              onerror="this.style.display='none';this.parentNode.querySelector('.av-fallback').style.display='flex'"/>
+            <div class="av-fallback" style="display:none">AE</div>
+          </div>
+          <div class="avatar-ring"></div>
+        </div>
+        <div class="author-info">
+          <div class="author-name">Assem ElQersh</div>
+          <div class="author-role">Main Author &amp; Lead Developer</div>
+          <div class="author-tags">
+            <span class="atag">Ex Treasurer — IEEE CS E-JUST SBC</span>
+            <span class="atag">Graduate CSE · E-JUST 2025</span>
+            <span class="atag">IEEE IES Volunteer</span>
+          </div>
+          <p class="author-bio">Lead developer of all four repositories. Designed the benchmark architecture, implemented core models, and established the IEEE IES alignment framework for this open research initiative.</p>
+          <div class="author-links">
+            <a href="https://github.com/Assem-ElQersh" target="_blank" class="alink">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/assemelqersh/" target="_blank" class="alink">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+            <a href="mailto:assem.elqersh.eg@ieee.org" class="alink">✉ IEEE Email</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Abdelrahman -->
+      <div class="author-card">
+        <div class="avatar-wrap">
+          <div class="avatar">
+            <img src="https://avatars.githubusercontent.com/bodiwael" alt="Abdelrahman"
+              onerror="this.style.display='none';this.parentNode.querySelector('.av-fallback').style.display='flex'"/>
+            <div class="av-fallback" style="display:none;background:linear-gradient(135deg,#7a4f00,#f0a500)">AW</div>
+          </div>
+          <div class="avatar-ring"></div>
+        </div>
+        <div class="author-info">
+          <div class="author-name">Abdelrahman Wael</div>
+          <div class="author-role">Co-developer &amp; Contributor</div>
+          <div class="author-tags">
+            <span class="atag">Chairman — IEEE EMBS E-JUST SBC</span>
+            <span class="atag">Undergrad BME · E-JUST 2028</span>
+            <span class="atag">IEEE IES Volunteer</span>
+          </div>
+          <p class="author-bio">Co-developer and contributor. Chairman of the IEEE EMBS E-JUST Student Branch Chapter. Second-year undergraduate in Biomedical Engineering, bringing an interdisciplinary perspective to industrial AI research.</p>
+          <div class="author-links">
+            <a href="https://github.com/bodiwael" target="_blank" class="alink">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+            <a href="https://www.linkedin.com/in/abdelrahman-wael-ammar/" target="_blank" class="alink">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              LinkedIn
+            </a>
+            <a href="mailto:abdelrahman.wael@ieee.org" class="alink">✉ IEEE Email</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CITATION -->
+<section id="citation">
+  <div class="container">
+    <div class="sec-tag">// 06 — CITE</div>
+    <div class="sec-line"></div>
+    <h2>Citation</h2>
+    <p class="sec-desc">If you use any repository in your research, please cite using the BibTeX entry below or the CITATION.cff file in each repo.</p>
+    <div class="cite-box">
+      <div class="cite-hdr">
+        <div class="cite-hdr-t">BibTeX · IEEE IES Industrial AI Lab</div>
+        <button class="cite-btn" onclick="copyCite(this)">Copy BibTeX</button>
+      </div>
+      <pre class="cite-body"><span class="cb">@misc{</span><span class="ck">ieee_ies_industrial_ai_lab_2026</span><span class="cb">,</span>
+  <span class="ck">author</span>       = <span class="cv">{El-Qersh, Assem and Wael, Abdelrahman}</span><span class="cb">,</span>
+  <span class="ck">title</span>        = <span class="cv">{{IEEE IES Industrial AI Lab: Open Benchmark Initiative}}</span><span class="cb">,</span>
+  <span class="ck">year</span>         = <span class="cv">{2026}</span><span class="cb">,</span>
+  <span class="ck">organization</span> = <span class="cv">{IEEE Industrial Electronics Society}</span><span class="cb">,</span>
+  <span class="ck">url</span>          = <span class="cv">{https://github.com/IEEE-IES-Industrial-AI-Lab}</span><span class="cb">,</span>
+  <span class="ck">note</span>         = <span class="cv">{Volunteer initiative · IEEE E-JUST Student Branch}</span>
+<span class="cb">}</span></pre>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTRIBUTING -->
+<section id="contributing">
+  <div class="container">
+    <div class="sec-tag">// 07 — CONTRIBUTE</div>
+    <div class="sec-line"></div>
+    <h2>Contributing</h2>
+    <p class="sec-desc">All contributions that improve reproducibility and benchmark coverage are welcome. Open an issue before submitting a pull request.</p>
+    <div class="contrib-grid">
+      <div class="contrib-card">
+        <div class="contrib-icon">📦</div>
+        <div class="contrib-title">Dataset Loaders</div>
+        <div class="contrib-desc">Add loaders for N-CMAPSS (2021), FEMTO bearing, PHM 2012, or real SWaT/WADI after obtaining access.</div>
+      </div>
+      <div class="contrib-card">
+        <div class="contrib-icon">🔬</div>
+        <div class="contrib-title">Model Implementations</div>
+        <div class="contrib-desc">Implement models from recent IEEE TIE/TII papers. TimesNet, iTransformer, Mamba-based architectures welcome.</div>
+      </div>
+      <div class="contrib-card">
+        <div class="contrib-icon">📊</div>
+        <div class="contrib-title">Benchmark Results</div>
+        <div class="contrib-desc">Run full benchmarks and contribute honest, reproducible results. Seed, split, and library versions must be documented.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">IEEE IES Industrial AI Lab</div>
+      <div class="footer-links">
+        <a href="https://github.com/IEEE-IES-Industrial-AI-Lab/Industrial-Predictive-Maintenance" target="_blank">Predictive Maintenance</a>
+        <a href="https://github.com/IEEE-IES-Industrial-AI-Lab/Industrial-Time-Series-AI" target="_blank">Time-Series AI</a>
+        <a href="https://github.com/IEEE-IES-Industrial-AI-Lab/AI-Power-Electronics-Diagnostics" target="_blank">Power Electronics</a>
+        <a href="https://github.com/IEEE-IES-Industrial-AI-Lab/Smart-Manufacturing-AI" target="_blank">Smart Manufacturing</a>
+      </div>
+      <div class="footer-copy">MIT License · IEEE E-JUST Student Branch Volunteer Initiative</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.bpanel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.btab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function copyCite(btn) {
+  const text = `@misc{ieee_ies_industrial_ai_lab_2026,
+  author       = {El-Qersh, Assem and Wael, Abdelrahman},
+  title        = {{IEEE IES Industrial AI Lab: Open Benchmark Initiative}},
+  year         = {2026},
+  organization = {IEEE Industrial Electronics Society},
+  url          = {https://github.com/IEEE-IES-Industrial-AI-Lab},
+  note         = {Volunteer initiative · IEEE E-JUST Student Branch}
+}`;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = 'Copied!';
+    btn.style.background = '#00d4a0';
+    setTimeout(() => { btn.textContent = 'Copy BibTeX'; btn.style.background = ''; }, 2000);
+  });
+}
+</script>
+</body>
+</html>
